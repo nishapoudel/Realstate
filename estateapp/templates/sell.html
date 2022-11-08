@@ -1,0 +1,89 @@
+{% extends 'basic.html' %} {% block title %} Sell {% endblock %}{% block body%}
+{% load static %}
+<div class="site-section">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-12 col-lg-8 mb-5">
+
+
+
+          <form method = "post" action="" class="p-5 bg-white border" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- <div class="row form-group">
+              <div class="col-md-12 mb-3 mb-md-0">
+                <label class="font-weight-bold" for="name"> Name</label>
+                <input type="text" id="name" name="name"  class="form-control" placeholder=" Name">
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="font-weight-bold" for="location">Location</label>
+                <input type="text" id="location" name="location" class="form-control" placeholder=" Address">
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="font-weight-bold" for="area">Area</label>
+                <input type="text" id="area" name="area" class="form-control" placeholder="Enter area">
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="font-weight-bold" for="area">Category</label>
+
+                <select name="category" id="">
+                  {% for type in category %}
+                  <option value="{{ type }}" name="category">{{ type }}</option>
+                  {% endfor %}
+              </select>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="font-weight-bold" for="area">Price</label>
+                <input type="text" id="price" name="price" class="form-control" placeholder="Enter price">
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="font-weight-bold" for="area">Image</label>
+                <input type="file" id="img" name="image" accept="image/*">
+
+              </div>
+            </div> -->
+
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <input type="submit" value="Post" class="btn btn-primary  py-2 px-4 rounded-0">
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="p-4 mb-3 bg-white">
+            <h3 class="h6 text-black mb-3 text-uppercase">Contact Info</h3>
+            <p class="mb-0 font-weight-bold">Address</p>
+            <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
+
+            <p class="mb-0 font-weight-bold">Phone</p>
+            <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
+
+            <p class="mb-0 font-weight-bold">Email Address</p>
+            <p class="mb-0"><a href="#">youremail@domain.com</a></p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+ {% endblock %}
