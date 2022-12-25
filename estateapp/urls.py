@@ -3,27 +3,40 @@ from . import views
 from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 app_name ="estateapp"
 urlpatterns=[
     # path("", views.index, name='home'),
     path("login", views.login_user, name='login'),
     path("register", views.register, name='register'),
-      path("", ProductCategory.as_view(), name='home'),
+    # path('social_auth/', include('social_django.urls', namespace='social')),
 
-     path('Item/<slug:slug>/', ItemDetail.as_view(), name="ItemDetail"),
+    path("", ProductCategory.as_view(), name='home'),
+
+    path("signOut", views.signOut, name='logout'),
+    path("filterByPrice/<int:id>", views.filterBy, name='logout'),
+
+    #  path('Item/<slug:slug>/', ItemDetail.as_view(), name="ItemDetail"),
 
 
      path("contact/", views.contact, name="Contactus"),
 
      path("buy", views.buy, name='buy'),
      path('<slug:category_slug>/', views.buy, name="item_by_category"),
-      path('item/<int:id>/', views.buy, ),
-     path('<int:id>/', views.item_detail, name="item_detail"),
+     path('item/<int:id>/', views.item_detail, name="item_detail"),
+
+    #   path('item/<slug:slug>/', views.item_detail, name="item_detail"),
+#  path('item/<int:id>/', views.item_detail, name="item_detail"),
+      path('item/<slug:category_slug>/', views.buy, ),
+
+    #  path('<slug:slug>/', views.item_detail, name="item_detail"),
 
 
      path("sell", views.sell, name="sell"),
+
      path('item/<int:id>/', views.item_detail, name="item_detail"),
+
      path("about", views.about, name="about"),
     path("properties", views.allproperties, name="allproperties"),
 

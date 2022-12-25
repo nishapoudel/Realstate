@@ -124,20 +124,19 @@
 
     <div class="row mb-5">
 
-      {% for item in cat.item_set.all %}
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="property-entry h-100">
-          <a href="property-details.html" class="property-thumbnail">
+      {% for item in cat.item_set.all|slice:":6" %}
+
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="property-entry ">
+          <a href="item/{{item.id}}" class="property-thumbnail">
             <div class="offer-type-wrap">
               <span class="offer-type bg-danger">Sale</span>
               <!-- <span class="offer-type bg-success">Rent</span> -->
             </div>
-            <img src="{{ item.imageURL }}" alt="Image" class="img-fluid" style="height:300px;"/>
+            <img src="{{ item.imageURL }}" alt="Image" class="img-fluid" style="height:240px; width: 100%; object-fit: cover;"/>
           </a>
           <div class="p-4 property-body">
-            <a href="#" class="property-favorite"
-              ><span class="icon-heart-o"></span
-            ></a>
+
             <h2 class="property-title">
               <a
                 href="item/{{item.id}}"
@@ -160,12 +159,19 @@
 
 
       {% endfor %}
+      <div class="text-center">
+        <a href="{{ cat.get_absolute_url }}" type="button" class="btn  btn-primary view-more">View All</a>
+      </div>
+
     </div>
+
+
      {% endfor %}
 
 
 
-    <div class="row">
+
+    <!-- <div class="row">
       <div class="col-md-12 text-center">
         <div class="site-pagination">
           <a href="#" class="active">1</a>
@@ -177,11 +183,11 @@
           <a href="#">10</a>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
-<div class="site-section bg-light">
+<!-- <div class="site-section bg-light">
   <div class="container">
     <div class="row">
       <div
@@ -264,6 +270,6 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 {% endblock %}

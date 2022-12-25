@@ -1479,4 +1479,29 @@ form.example::after {
   height: 300px !important;
   width: 300px !important;
 }
+.filterBy{
+  text-decoration: none;
+    border-right: 1px solid #d2c9c9;
+    padding: 0px 10px;
+}
+.view-more {
+  background: #7cbd1e !important;
+  border: none !important;
+  outline: none;
+}
 
+.side-cat a{
+  text-decoration: none;
+  color: gray;
+  font-size: 15px;
+}
+
+.cat-title{
+  margin-top: 1rem;
+}
+a{
+  text-decoration: none!important;
+}
+.site-pagination {
+  margin: 2rem;
+}

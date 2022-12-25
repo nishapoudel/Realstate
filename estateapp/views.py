@@ -10,6 +10,10 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.models import User
 from estateapp.forms import ItemForm
+from django.core.paginator import Paginator , EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 # from .models import Item
 from .models import *
 
@@ -106,12 +110,16 @@ def login_user(request):
     return render(request, 'login.html')
 
 
-def logout(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('home')
+def signOut(request):
+    logout(request)
+    return redirect('/login')
 
-    return render('home')
+def filterBy(request, id):
+    categories = Category.objects.all()
+    filter_price = Filter_Price.objects.all()
+    item = Item.objects.filter(filter_price = id).all();
+    return render(request, 'filterBy.html', {'categories':categories, 'filter_price':filter_price,'item':item})
+
 # def sell(request,category_slug=None):
 
 #     if request.method== "POST":
@@ -138,18 +146,16 @@ def logout(request):
 #     return render(request, 'details.html')
 
 
-def item_detail(request,id):
-    # item=get_object_or_404(Item,id=id)
-    ItemAll =Item.objects.all()
-    item=Item.objects.filter(id=id)
-    return render(request,'details.html',{'item':item[0],'ItemAll':ItemAll})
 
 
 
 def allproperties(request):
 
     items = Item.objects.all().order_by("-id")
-    params= {'items': items}
+    page =Paginator(items, 9)
+    page_list = request.GET.get('page')
+    page = page.get_page(page_list)
+    params= {'page':page,'items': items}
     return render(request, 'properties.html',params)
 
 
@@ -163,18 +169,27 @@ class ProductCategory(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['allcategories'] = Category.objects.all()
+        context['allcategories'] =Category.objects.all()[:5]
+        context['item'] = Item.objects.all()[:5]
+
+
+
+
+
+
         return context
 
-class ItemDetail(TemplateView):
-    template_name = "detail.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        url_slug = self.kwargs['slug']
-        item = Item.objects.get(slug = url_slug)     #get fetchfor one obj, slug is db model and url_slug is url's slug
-        context['itemVar'] =  item
-        return context
+
+# class ItemDetail(TemplateView):
+#     template_name = "details.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         slug = self.kwargs['slug']
+#         item = Item.objects.all().filter(slug = slug)
+#         context['item'] =   Item.objects.all().filter(slug = slug)
+#         return context
 
 def Search(request):
     # query = request.GET['query']
@@ -194,19 +209,34 @@ def buy(request,category_slug=None):
 
     CATID = request.GET.get('categories')
     PRICE_FILTER_ID = request.GET.get('filter_price')
+    page =Paginator(item, 9)
+    page_list = request.GET.get('page')
+    page = page.get_page(page_list)
 
 
     if category_slug:
         category = get_object_or_404(Category,slug=category_slug)
         item = item.filter(category=category)
+        page =Paginator(item, 9)
+        page_list = request.GET.get('page')
+        page = page.get_page(page_list)
+
+
     if  PRICE_FILTER_ID :
         item = Item.objects.filter(filter_price= PRICE_FILTER_ID )
+        page =Paginator(item, 9)
+        page_list = request.GET.get('page')
+        page = page.get_page(page_list)
+
+
 
 
     return render(request, 'buy.html', {'categories':categories,
                                               'category':category,
+                                              'page':page,
                                               'item':item,
                                               'filter_price':filter_price,
+
                                               })
 
     category = None
@@ -228,7 +258,7 @@ def buy(request,category_slug=None):
 
                                               })
 
-
+@login_required(login_url ="/login")
 def sell(request):
     form = ItemForm()
     if request.method == 'POST':
@@ -247,3 +277,18 @@ def sell(request):
        )
 
 
+
+# def item_detail(request,slug):
+    # item=get_object_or_404(Item,id=id)
+    # ItemAll =Item.objects.all()
+    # item= Item.objects.filter(slug=slug)
+    # return render(request,'details.html',{'item':item,'ItemAll':ItemAll})
+
+def item_detail(request, id):
+    # context ={}
+    # context["item"] = Item.objects.filter(id = id)
+    # return render(request, "details.html", context)
+    product_details = Item.objects.get(id=id)
+    print(id)
+
+    return render(request, "details.html",{'context':product_details})

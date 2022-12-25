@@ -49,118 +49,178 @@
         </div>
       </form>
     </div>
+  </div>
+</div>
 
-    <div class="row">
-      {% block content %}
 
-      <div class="col-md-12">
-        <div
-          class="view-options bg-white py-3 px-3 d-md-flex align-items-center"
-        >
-          <div class="mr-auto">
-            <a href="index.html" class="icon-view view-module active"
-              ><span class="icon-view_module"></span
-            ></a>
-            <a href="view-list.html" class="icon-view view-list"
-              ><span class="icon-view_list"></span
-            ></a>
-          </div>
-          <div class="ml-auto d-flex align-items-center">
-            <div>
-              <a
+       <!-- Shop Start -->
+       <div class="container-fluid">
+        <div class="row px-xl-5">
+            {% block content %}
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4 side-cat">
+                <!-- Price Start -->
+
+                <div class=" p-4 mb-30">
+
+
+
+
+
+                </div>
+                <h6 class="section-title position-relative text-uppercase "><span class=" pr-3 cat-title">Filter by Category</span></h5>
+                {% for c in categories %}
+                <div class=" p-2 mb-30">
+                    <a href="{{ c.get_absolute_url }}" class="view-list filterBy"
+                    >{{ c.name }}</a
+                  >
+
+                </div>
+                {% endfor %}
+                <a
                 href="{% url 'estateapp:buy' %}"
                 class="view-list px-3 border-right active"
                 >All</a
               >
-              {% for c in categories %}
-              <a
-                href="{{ c.get_absolute_url }}"
-                class="view-list px-3 border-right"
-                >{{ c.name }}</a
-              >
-              {% endfor %}
-            </div>
-            {% for f_price in filter_price %}
-            <div class="select-wrap list-group">
-              <a href="/Item?filter_price={{f_price.id }}" class="view-list"
-                >{{ f_price.price }}</a
-              >
+              <br>
+              <br>
+                <!-- Price End -->
 
-              <!-- <span class="icon icon-arrow_drop_down"></span>
-              <select class="form-control form-control-sm d-block rounded-0">
-                <option value="">Sort by</option>
-                <option value="">Price Ascending</option>
-                <option value="">Price Descending</option>
-              </select> -->
+                <!-- Color Start -->
+                <h6 class="section-title position-relative text-uppercase "><span class=" pr-3 cat-title ">Filter by Price</span></h5>
+                {% for f_price in filter_price %}
+                <div class=" p-2 mb-30">
+                    <a href="/filterByPrice/{{f_price.id }}" class="view-list filterBy"
+                    >{{ f_price.price }}</a
+                  >
+
+                </div>
+
+                {% endfor %}
+                <!-- Color End -->
+
+
             </div>
-            {% endfor %}
+            {% endblock content %}
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <!-- <div>
+                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+                            </div> -->
+                            <h3>
+                                <strong class="property-price text-primary mb-3 d-block text-success"
+                                  >{{category_name.name}}</strong
+                                >
+                              </h3>
+
+                        </div>
+                    </div>
+                    <h4 style="color: grey;">{% if category %}{{ category.name }}{% else %} All{% endif %}</h1>
+                     {% for item in page %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" style="height: 250px;"   src="{{ item.imageURL }}" alt="">
+
+                            </div>
+                            <div class="p-4 property-body ">
+                                <a class="h6 text-decoration-none text-truncate" href="/item/{{item.id }}">{{ item.name}}</a>
+                                <span class="property-location d-block mb-3"
+                                ><span class="property-icon icon-room"></span>
+                                {{ item.location}}
+                              </span>
+
+                              <strong
+                              class="property-price text-primary mb-3 d-block text-success"
+                              >Rs. {{ item.price}}</strong
+                            >
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                                    <small>(99)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+
+
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <div class="site-pagination">
+              {% if page.has_previous %}
+              <a class="page-link" href="?page={{page.previous_page_number}}" >❮</a>
+
+
+            {% endif %}
+            {% for num_page in page.paginator.page_range %}
+
+        {% if page.number == num_page %}
+       <a class="page-link" href="?page={{num_page}}">{{num_page}}</a>
+        {% else %}
+      <a class="page-link" href="?page={{num_page}}">{{num_page}}</a>
+        {% endif %}
+
+        {% endfor %}
+        {% if page.has_next %}
+
+          <a class="page-link" href="?page={{page.next_page_number}}">❯</a>
+
+        {% endif %}
+      </div>
           </div>
         </div>
-      </div>
-      {% endblock content %}
     </div>
+    <!-- Shop End -->
+
+
   </div>
+
 </div>
 
-<div class="site-section site-section-sm bg-light">
-  <div class="container">
-    <h3>
-      <strong class="property-price text-primary mb-3 d-block text-success"
-        >{{category_name.name}}</strong
-      >
-    </h3>
 
-    <div class="row mb-5">
-      <h1>{% if category %}{{ category.name }}{% else %} All{% endif %}</h1>
-      {% for item in item %}
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="property-entry h-100">
-          <a href="property-details.html" class="property-thumbnail">
-            <div class="offer-type-wrap">
-              <span class="offer-type bg-danger">Sale</span>
-            </div>
-            <img src="{{ item.imageURL }}" alt="Image"  id ="image-fit"class="img-fluid " style="height:300px;   " />
-          </a>
-          <div class="p-4 property-body">
-            <a href="#" class="property-favorite"
-              ><span class="icon-heart-o"></span
-            ></a>
-            <h2 class="property-title">
-              <a
-                href="{{ item.get_absolute_url }}"
-                style="text-decoration: none"
-                >{{ item.name}}</a
-              >
-            </h2>
-            <span class="property-location d-block mb-3"
-              ><span class="property-icon icon-room"></span>
-              {{ item.location}}
-            </span>
-            <strong
-              class="property-price text-primary mb-3 d-block text-success"
-              >Rs. {{ item.price}}</strong
-            >
-          </div>
-        </div>
-      </div>
-
-      {% endfor %}
-    </div>
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <div class="site-pagination">
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
-          <span>...</span>
-          <a href="#">10</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- <div class="site-section bg-light">
   <div class="container">

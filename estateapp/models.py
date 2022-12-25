@@ -50,9 +50,11 @@ class Item(models.Model):
     area= models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, default=1)
     filter_price = models.ForeignKey(Filter_Price, on_delete=models.CASCADE, null=True, default='50 lakhs')
+    slug = models.CharField(max_length=100, default= 'real-state' )
 
     price = models.IntegerField()
-    image = models.ImageField(upload_to = 'image', default=1 )
+    image = models.ImageField(upload_to = 'image/', default=1 )
+
     created_date = models.DateField(default=datetime.now)
 
 

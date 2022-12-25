@@ -41,7 +41,12 @@ INSTALLED_APPS = [
 
     'django.contrib.staticfiles',
     # 'estateapp',
+ 'social_django',
+    'allauth',
+
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'realestate.urls'
@@ -66,13 +73,16 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                 'django.contrib.messages.context_processors.messages',
+                  'social_django.context_processors.backends',
+
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'realestate.wsgi.application'
+
 
 
 # Database
@@ -84,6 +94,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
 
 
 # Password validation
@@ -136,6 +151,12 @@ STATIC_URL = '/static/'
 
 
 
+
+
+
+
+
+
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 
@@ -148,12 +169,17 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_DIRS= [
-    BASE_DIR/ "static"
-    ]
+# STATICFILES_DIRS= [
+#     BASE_DIR/ "static"
+#     ]
 
-MEDIA_ROOT = BASE_DIR/ 'media'
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR/ 'media'
+# MEDIA_URL = '/media/'
+
+STATIC_URL = 'static/'
+
+MEDIA_URL= '/media/'
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
 
 
 
@@ -166,3 +192,15 @@ MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
 # MEDIA_URL = '/media/'
 
+#Add this at the bottom in settings.py
+#social app custom settings
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'sell'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '766337496015-rjg0ptb6q3kcrfb74vju37b7kdjupfdn.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'

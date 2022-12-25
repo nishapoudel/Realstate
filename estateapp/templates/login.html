@@ -6,7 +6,7 @@
          href = "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
          integrity = "sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
          crossorigin = "anonymous">
-      <title> Bootstrap 4 Registration Form Example </title>
+      <title> Login </title>
       <style>
 
 
@@ -39,9 +39,10 @@
 
               </div> -->
               <div class="card-body p-4 p-sm-5">
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login With Google</a>
                 <h5 class="card-title text-center mb-5 fw-light fs-5">Login</h5>
                 <form action ="/login" method="post">
-                    {% csrf_token %}
+                  {% csrf_token %}
                   <!-- <div class="form-floating mb-3">
                     <label for="floatingInputUsername">Username</label>
                     <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>

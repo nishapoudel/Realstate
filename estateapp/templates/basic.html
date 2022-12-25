@@ -81,12 +81,19 @@
           </div>
           <div class="col-md-8 col-xs-12">
             <ul>
+              {% if user.is_authenticated%}
+              <li class="nav-item d-flex" style="align-items: center;">
+                <span>Welcome 😊 {{request.user.username}}</span>
+                <a class="nav-link text-warning fw-bold" href="/signOut" >LOGOUT</a>
+              </li>
+              {%else%}
               <li class="nav-item">
                 <a class="nav-link" href="/register">Sign Up</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
               </li>
+              {%endif%}
 
               <!-- <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-google-plus-square"></i></a>
