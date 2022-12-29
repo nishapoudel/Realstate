@@ -1,23 +1,26 @@
 {% extends 'basic.html' %} {% block title %} Palden {% endblock %}
  {% block body %}
 {% load static %}
-
 <div class="site-section site-section-sm pb-0">
   <div class="container">
     <div class="row">
-      <form class="form-search col-md-12" style="margin-top: -100px">
+      <form class="form-search col-md-12" style="margin-top: -100px" method="get" action="/search">
         <div class="row align-items-end">
+
           <div class="col-md-3">
             <label for="list-types">Listing Types</label>
             <div class="select-wrap">
               <span class="icon icon-arrow_drop_down"></span>
+
               <select
                 name="list-types"
-                id="list-types"
+                id = "query"
                 class="form-control d-block rounded-0"
               >
-                <option value="">Land</option>
-                <option value="">House</option>
+              {% for cat in allcategories %}
+                <option value={{ cat.id}}>{{cat.name}}</option>
+                <!-- <option value="">House</option> -->
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -27,15 +30,14 @@
             <div class="select-wrap">
               <span class="icon icon-arrow_drop_down"></span>
               <select
-                name="select-city"
-                id="select-city"
+
                 class="form-control d-block rounded-0"
-              >
-                <option value="">Jorpati</option>
-                <option value="">Boudha</option>
-                <option value="">Thali</option>
-                <option value="">Dallu</option>
-                <option value="">Balaju</option>
+                name="query" id = "query" >
+                <option  name="query" id = "query">Jorpati</option>
+                <option name="query" id = "query">Boudha</option>
+                <option  name="query" id = "query">Thali</option>
+                <option  name="query" id = "query">Dallu</option>
+                <option name="query" id = "query" >Balaju</option>
               </select>
             </div>
           </div>
@@ -49,6 +51,63 @@
         </div>
       </form>
     </div>
+
+
+
+    <div class="row">
+
+      {% block content %}
+
+      <div class="col-md-12">
+
+        <div
+          class="view-options bg-white py-3 px-3 d-md-flex align-items-center"
+        >
+
+          <div class="mr-auto">
+            <a href="index.html" class="icon-view view-module active"
+              ><span class="icon-view_module"></span
+            ></a>
+            <a href="view-list.html" class="icon-view view-list"
+              ><span class="icon-view_list"></span
+            ></a>
+          </div>
+          <div class="ml-auto d-flex align-items-center">
+            <div>
+              <!-- <a
+                href="{% url 'estateapp:home' %}"
+                class="view-list px-3 border-right active"
+                >All</a
+              >
+              {% for c in categories %}
+              <a
+                href="{{ c.get_absolute_url }}"
+                class="view-list px-3 border-right"
+                >{{ c.name }}</a
+              >
+              {% endfor %} -->
+              <!-- <a href="#" class="view-list px-3 border-right">Land</a>
+                <a href="#" class="view-list px-3">House</a> -->
+            </div>
+
+            <div class="select-wrap">
+                <form method="get" action="/search">
+  <input type="text" placeholder="Enter Location.." name="query" id = "query">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+              <!-- <span class="icon icon-arrow_drop_down"></span>
+              <select class="form-control form-control-sm d-block rounded-0">
+                <option value="">Sort by</option>
+                <option value="">Price Ascending</option>
+                <option value="">Price Descending</option>
+              </select> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endblock content %}
+
+    </div>
   </div>
 </div>
 
@@ -56,7 +115,7 @@
        <!-- Shop Start -->
        <div class="container-fluid">
         <div class="row px-xl-5">
-            {% block content %}
+
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4 side-cat">
                 <!-- Price Start -->
@@ -101,7 +160,7 @@
 
 
             </div>
-            {% endblock content %}
+
             <!-- Shop Sidebar End -->
 
 

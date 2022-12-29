@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 # from .models import Item
+from django.db.models import Q
+
 from .models import *
 
 
@@ -193,11 +195,23 @@ class ProductCategory(TemplateView):
 
 def Search(request):
     # query = request.GET['query']
+    allcategories = Category.objects.all()
     query = request.GET.get('query', '')
 
     items = Item.objects.filter(location__icontains = query)
-    params = {'allitems':items}
+    page =Paginator(items, 9)
+    page_list = request.GET.get('page')
+    page = page.get_page(page_list)
+    params = {'allitems':items,'allcategories':allcategories,'page':page}
     return render(request, 'search.html', params)
+
+# def Search(request):
+#     items = Item.objects.filter(
+#         Q(category__icontains=request.GET['name']) |
+#         Q(location__icontains=request.GET['query'])
+#     )
+#     params = {'allitems':items}
+#     return render(request, 'search.html', params)
 
 
 
@@ -236,6 +250,7 @@ def buy(request,category_slug=None):
                                               'page':page,
                                               'item':item,
                                               'filter_price':filter_price,
+                                              'allcategories':categories,
 
                                               })
 

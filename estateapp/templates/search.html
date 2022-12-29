@@ -5,91 +5,121 @@
 {% block body %}
 {% load static %}
 <div class="site-section site-section-sm pb-0">
-    <div class="container">
-      <div class="row">
-        <form class="form-search col-md-12" style="margin-top: -100px;">
-          <div class="row  align-items-end">
-            <div class="col-md-3">
-              <label for="list-types">Listing Types</label>
-              <div class="select-wrap">
-                <span class="icon icon-arrow_drop_down"></span>
-                <select name="list-types" id="list-types" class="form-control d-block rounded-0">
-                  <option value="">Land</option>
-                  <option value="">House</option>
+  <div class="container">
+    <div class="row">
+      <form class="form-search col-md-12" style="margin-top: -100px" method="get" action="/search">
+        <div class="row align-items-end">
 
-                </select>
-              </div>
-            </div>
+          <div class="col-md-3">
+            <label for="list-types">Listing Types</label>
+            <div class="select-wrap">
+              <span class="icon icon-arrow_drop_down"></span>
 
-            <div class="col-md-3">
-              <label for="select-city">Select Location</label>
-              <div class="select-wrap">
-                <span class="icon icon-arrow_drop_down"></span>
-                <select name="select-city" id="select-city" class="form-control d-block rounded-0">
-                  <option value="">Jorpati</option>
-                  <option value="">Boudha</option>
-                  <option value="">Thali</option>
-                  <option value="">Dallu</option>
-                  <option value="">Balaju</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <input type="submit" class="btn btn-success text-white btn-block rounded-0" value="Search">
+              <select
+                name="list-types"
+                id = "query"
+                class="form-control d-block rounded-0"
+              >
+              {% for cat in allcategories %}
+                <option value={{ cat.id}}>{{cat.name}}</option>
+                <!-- <option value="">House</option> -->
+                {% endfor %}
+              </select>
             </div>
           </div>
-        </form>
-      </div>
 
-      <div class="row">
-        {% block content %}
+          <div class="col-md-3">
+            <label for="select-city">Select Location</label>
+            <div class="select-wrap">
+              <span class="icon icon-arrow_drop_down"></span>
+              <select
 
-
-        <div class="col-md-12">
-
-
-          <div class="view-options bg-white py-3 px-3 d-md-flex align-items-center">
-            <div class="mr-auto">
-              <a href="index.html" class="icon-view view-module active"><span class="icon-view_module"></span></a>
-              <a href="view-list.html" class="icon-view view-list"><span class="icon-view_list"></span></a>
-
+                class="form-control d-block rounded-0"
+                name="query" id = "query" >
+                <option  name="query" id = "query">Jorpati</option>
+                <option name="query" id = "query">Boudha</option>
+                <option  name="query" id = "query">Thali</option>
+                <option  name="query" id = "query">Dallu</option>
+                <option name="query" id = "query" >Balaju</option>
+              </select>
             </div>
-            <div class="ml-auto d-flex align-items-center">
-              <!-- <div>
-                <a href="#" class="view-list px-3 border-right active">All</a>
-                <a href="#" class="view-list px-3 border-right">Land</a>
-                <a href="#" class="view-list px-3">House</a>
-              </div> -->
+          </div>
+          <div class="col-md-3">
+            <input
+              type="submit"
+              class="btn btn-success text-white btn-block rounded-0"
+              value="Search"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
 
 
-              <div class="select-wrap">
 
-                <!-- <select class="form-control form-control-sm d-block rounded-0">
-                  <option value="">Sort by</option>
-                  <option value="">Price Ascending</option>
-                  <option value="">Price Descending</option>
-                </select> -->
-                         <form method="get" action="/search">
+    <div class="row">
+
+      {% block content %}
+
+      <div class="col-md-12">
+
+        <div
+          class="view-options bg-white py-3 px-3 d-md-flex align-items-center"
+        >
+
+          <div class="mr-auto">
+            <a href="index.html" class="icon-view view-module active"
+              ><span class="icon-view_module"></span
+            ></a>
+            <a href="view-list.html" class="icon-view view-list"
+              ><span class="icon-view_list"></span
+            ></a>
+          </div>
+          <div class="ml-auto d-flex align-items-center">
+            <div>
+              <!-- <a
+                href="{% url 'estateapp:home' %}"
+                class="view-list px-3 border-right active"
+                >All</a
+              >
+              {% for c in categories %}
+              <a
+                href="{{ c.get_absolute_url }}"
+                class="view-list px-3 border-right"
+                >{{ c.name }}</a
+              >
+              {% endfor %} -->
+              <!-- <a href="#" class="view-list px-3 border-right">Land</a>
+                <a href="#" class="view-list px-3">House</a> -->
+            </div>
+
+            <div class="select-wrap">
+                <form method="get" action="/search">
   <input type="text" placeholder="Enter Location.." name="query" id = "query">
   <button type="submit"><i class="fa fa-search"></i></button>
 </form>
-              </div>
+              <!-- <span class="icon icon-arrow_drop_down"></span>
+              <select class="form-control form-control-sm d-block rounded-0">
+                <option value="">Sort by</option>
+                <option value="">Price Ascending</option>
+                <option value="">Price Descending</option>
+              </select> -->
             </div>
-
           </div>
         </div>
-        {% endblock content %}
       </div>
+      {% endblock content %}
 
     </div>
   </div>
+</div>
 
   <div class="site-section site-section-sm bg-light">
     <div class="container">
-      <h3> <strong class="property-price text-primary mb-3 d-block text-success">All</strong></h3>
+      <h3> <strong class="property-price text-primary mb-3 d-block text-success">All{{ allcategories.name}}</strong></h3>
 
       <div class="row mb-5">
-        {% for item in allitems %}
+        {% for item in page %}
         <div class="col-md-6 col-lg-4 mb-4">
           <div class="property-entry h-100">
 
@@ -271,6 +301,27 @@
       <div class="row">
         <div class="col-md-12 text-center">
           <div class="site-pagination">
+            {% if page.has_previous %}
+            <a class="page-link" href="?page={{page.previous_page_number}}" >❮</a>
+
+
+          {% endif %}
+          {% for num_page in page.paginator.page_range %}
+
+      {% if page.number == num_page %}
+     <a class="page-link" href="?page={{num_page}}">{{num_page}}</a>
+      {% else %}
+    <a class="page-link" href="?page={{num_page}}">{{num_page}}</a>
+      {% endif %}
+
+      {% endfor %}
+      {% if page.has_next %}
+
+        <a class="page-link" href="?page={{page.next_page_number}}">❯</a>
+
+      {% endif %}
+    </div>
+          <!-- <div class="site-pagination">
             <a href="#" class="active">1</a>
             <a href="#">2</a>
             <a href="#">3</a>
@@ -278,7 +329,7 @@
             <a href="#">5</a>
             <span>...</span>
             <a href="#">10</a>
-          </div>
+          </div> -->
         </div>
       </div>
 
